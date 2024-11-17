@@ -3,7 +3,6 @@ use v5.10;
 package REST::Neo4p::Entity;
 use REST::Neo4p::Exceptions;
 use Carp qw(croak carp);
-use JSON;
 use URI::Escape;
 use strict;
 use warnings;

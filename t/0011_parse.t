@@ -6,7 +6,6 @@ use lib '../lib';
 use REST::Neo4p::ParseStream;
 use JSON::MaybeXS ();
 use HOP::Stream qw/head tail drop/;
-use experimental;
 use strict;
 use warnings;
 #$SIG{__DIE__} = sub { print $_[0] };
@@ -40,7 +39,8 @@ my ($ct,$newct);
 
 while (my $obj = drop($str)) {
   no if $^V ge v5.37, warnings => 'deprecated::smartmatch';
-  use experimental 'smartmatch';
+  use if $^V lt v5.41, experimental => 'smartmatch';
+  use if $^V ge v5.41, 'Switch::Back';
   is $obj->[0],'ARELT', "is array elt";
   given ($obj->[1]) {
     when(ref eq 'HASH'){
@@ -85,7 +85,8 @@ ok $obj = drop($str), 'get paused stream entry';
 is_deeply $obj, [qw/data DATA_STREAM/], 'paused for data stream';
 while (my $obj = drop($ar)) {
   no if $^V ge v5.37, warnings => 'deprecated::smartmatch';
-  use experimental 'smartmatch';
+  use if $^V lt v5.41, experimental => 'smartmatch';
+  use if $^V ge v5.41, 'Switch::Back';
   is $obj->[0],'ARELT', "is array elt";
   given ($obj->[1]) {
     when(ref eq 'ARRAY'){
@@ -137,7 +138,8 @@ while ($r_obj = drop($r_str)) {
   isa_ok($ar,'HOP::Stream');
   while (my $row = drop($ar)) {
     no if $^V ge v5.37, warnings => 'deprecated::smartmatch';
-    use experimental 'smartmatch';
+    use if $^V lt v5.41, experimental => 'smartmatch';
+    use if $^V ge v5.41, 'Switch::Back';
     is $row->[0],'ARELT', "is array elt";
     given ($row->[1]) {
       when(ref eq 'HASH'){

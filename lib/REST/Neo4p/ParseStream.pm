@@ -29,7 +29,8 @@ sub j_parse {
     # object
     my $type;
     no if $^V ge v5.37, warnings => 'deprecated::smartmatch';
-    use experimental 'smartmatch';
+    use if $^V lt v5.41, experimental => 'smartmatch';
+    use if $^V ge v5.41, 'Switch::Back';
     given ($j->incr_text) {
       when (/^\s*"commit"/i) {
 	$type = 'TXN';
@@ -149,7 +150,8 @@ sub j_parse_object {
       $key = $m;
     }
     no if $^V ge v5.37, warnings => 'deprecated::smartmatch';
-    use experimental 'smartmatch';
+    use if $^V lt v5.41, experimental => 'smartmatch';
+    use if $^V ge v5.41, 'Switch::Back';
     given ($key) {
       when ('columns') {
 	eval {

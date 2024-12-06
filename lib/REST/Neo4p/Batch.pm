@@ -42,7 +42,8 @@ sub batch (&@) {
   my $str = $res->[1]->();
   while (my $obj = drop($str)) {
     no if $^V ge v5.37, warnings => 'deprecated::smartmatch';
-    use experimental qw/smartmatch/;
+    use if $^V lt v5.41, experimental => 'smartmatch';
+    use if $^V ge v5.41, 'Switch::Back';
     $obj = $obj->[1];
     given ($obj) {
       when (!!ref($obj)) {

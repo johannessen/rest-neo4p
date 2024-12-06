@@ -90,7 +90,8 @@ sub _do {
   my $self = shift;
   my ($rq, $url, @args) = @_;
   no if $^V ge v5.37, warnings => 'deprecated::smartmatch';
-  use experimental qw/smartmatch/;
+  use if $^V lt v5.41, experimental => 'smartmatch';
+  use if $^V ge v5.41, 'Switch::Back';
   my ($tx, $content, $content_file);
   # neo4j wants to redirect .../data to .../data/
   # and mojo doesn't want to redirect at all...

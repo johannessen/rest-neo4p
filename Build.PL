@@ -74,7 +74,7 @@ my $build =  $class->new
 	'LWP::Protocol::https' => 6.06,
 	'Exception::Class' => 1.3,
 	'Tie::IxHash' => 0,
-	'experimental' => 0,
+	($^V ge v5.41 ? ('Switch::Back' => 0) : ('experimental' => 0)),
 	'MIME::Base64' => 0,
 	perl => 5.010001,
 	'Neo4j::Driver' => '0.19',
@@ -94,7 +94,7 @@ my $build =  $class->new
 	'Test::NoWarnings' => 0,
 	'Mock::Quick' => 0,
 	'List::MoreUtils' => 0,
-	experimental => 0,
+	($^V ge v5.41 ? ('Switch::Back' => 0) : ('experimental' => 0)),
 	'IPC::Run' => 0,
 	'IO::Pty' => 0,
 
